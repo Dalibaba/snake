@@ -5,3 +5,10 @@ class Window:
     COLOR_RED = 200
     COLOR_GREEN = 230
     COLOR_BLUE = 0
+
+
+class DIRECTION:
+    UP = "UP"
+    DOWN = "DOWN"
+    LEFT = "LEFT"
+    RIGHT = "RIGHT"

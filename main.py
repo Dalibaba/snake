@@ -2,7 +2,6 @@ import pygame
 import constants
 from snake import snake
 
-
 # Initialize pygame
 pygame.init()
 
@@ -31,16 +30,23 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
+        # keyboard pressing events
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                player_snake.turn(constants.DIRECTION.LEFT)
+            if event.key == pygame.K_RIGHT:
+                player_snake.turn(constants.DIRECTION.RIGHT)
+            if event.key == pygame.K_DOWN:
+                player_snake.turn(constants.DIRECTION.DOWN)
+            if event.key == pygame.K_UP:
+                player_snake.turn(constants.DIRECTION.UP)
     # background color screen
-    screen.fill((constants.Window.COLOR_RED,constants.Window.COLOR_GREEN,constants.Window.COLOR_BLUE))
-
+    screen.fill((constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
 
     # display snake
     pygame.draw.rect(screen, player_snake.color, (player_snake.x, player_snake.y,
                                                   player_snake.size_x, player_snake.size_y))
 
-
-    clock.tick(1)
+    clock.tick(10)
     player_snake.move()
-    print(player_snake.x)
     pygame.display.update()
