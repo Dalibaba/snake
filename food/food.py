@@ -21,6 +21,7 @@ class Food:
     def change_position(self):
         self.x, self.y = self.random_position(self.world_width, self.world_height)
 
+
     @staticmethod
     def random_position(world_width, world_height):
         x_pos = round(random.randint(0, world_width) / 10) * 10

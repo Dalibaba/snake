@@ -2,6 +2,7 @@ import pygame
 import constants
 from snake import snake
 from food import food
+from player import player
 
 # Initialize pygame
 pygame.init()
@@ -21,9 +22,13 @@ pygame.display.set_icon(icon)
 clock = pygame.time.Clock()
 
 # create snake
-player_snake = snake.Snake(constants.Window.SCREEN_WIDTH, constants.Window.SCREEN_HEIGHT)
+game_snake = snake.Snake(constants.Window.SCREEN_WIDTH, constants.Window.SCREEN_HEIGHT)
 # create food
 game_food = food.Food(constants.Window.SCREEN_WIDTH, constants.Window.SCREEN_HEIGHT)
+# create player
+game_player = player.Player("test")
+
+
 
 # Game Loop
 running = True
@@ -36,32 +41,35 @@ while running:
         # keyboard pressing events
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                player_snake.turn(constants.DIRECTION.LEFT)
+                game_snake.turn(constants.Direction.LEFT)
             if event.key == pygame.K_RIGHT:
-                player_snake.turn(constants.DIRECTION.RIGHT)
+                game_snake.turn(constants.Direction.RIGHT)
             if event.key == pygame.K_DOWN:
-                player_snake.turn(constants.DIRECTION.DOWN)
+                game_snake.turn(constants.Direction.DOWN)
             if event.key == pygame.K_UP:
-                player_snake.turn(constants.DIRECTION.UP)
+                game_snake.turn(constants.Direction.UP)
     # background color screen
     screen.fill((constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
 
+    # display game area
+    pygame.draw.rect(screen, (0,0,0), pygame.Rect(50, 50, constants.Window.SCREEN_WIDTH -100, constants.Window.SCREEN_HEIGHT -100),  2)
+
     # display snake
-    pygame.draw.rect(screen, player_snake.color, (player_snake.x, player_snake.y,
-                                                  player_snake.size_x, player_snake.size_y))
+    for pos in game_snake.block_positions:
 
-
+        pygame.draw.rect(screen, game_snake.color, (pos[0], pos[1],
+                                                      game_snake.size_x, game_snake.size_y))
 
     # display food
     pygame.draw.rect(screen, game_food.color, (game_food.x, game_food.y,
                                                game_food.size_x, game_food.size_y))
 
     # if snake eats food, delete food instance
-    if player_snake.x == game_food.x and player_snake.y == game_food.y:
+    if game_snake.x == game_food.x and game_snake.y == game_food.y:
         game_food.change_position()
+        game_snake.eat()
+        game_player.increase_score()
 
-
-
-    clock.tick(20)
-    player_snake.move()
+    clock.tick(10)
+    game_snake.move()
     pygame.display.update()
