@@ -1,6 +1,7 @@
 import pygame
 import constants
 from snake import snake
+from food import food
 
 # Initialize pygame
 pygame.init()
@@ -21,6 +22,8 @@ clock = pygame.time.Clock()
 
 # create snake
 player_snake = snake.Snake(constants.Window.SCREEN_WIDTH, constants.Window.SCREEN_HEIGHT)
+# create food
+game_food = food.Food(constants.Window.SCREEN_WIDTH, constants.Window.SCREEN_HEIGHT)
 
 # Game Loop
 running = True
@@ -47,6 +50,18 @@ while running:
     pygame.draw.rect(screen, player_snake.color, (player_snake.x, player_snake.y,
                                                   player_snake.size_x, player_snake.size_y))
 
-    clock.tick(10)
+
+
+    # display food
+    pygame.draw.rect(screen, game_food.color, (game_food.x, game_food.y,
+                                               game_food.size_x, game_food.size_y))
+
+    # if snake eats food, delete food instance
+    if player_snake.x == game_food.x and player_snake.y == game_food.y:
+        game_food.change_position()
+
+
+
+    clock.tick(20)
     player_snake.move()
     pygame.display.update()
