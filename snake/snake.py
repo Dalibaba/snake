@@ -12,15 +12,15 @@ class Snake:
     Create Snake with starting position and direction
     """
 
-    def __init__(self, world_width, world_height, size_x=10, size_y=10):
-        self.x = world_width / 2
-        self.y = world_height / 2
+    def __init__(self, world_min_x, world_max_x, world_min_y, world_max_y, size_x=10, size_y=10):
+        self.x = (world_min_x + world_max_x) / 2
+        self.y = (world_min_y + world_max_y) / 2
         self.color = (0, 0, 0)
         self.size_x = size_x
         self.size_y = size_y
         self.direction = self.random_direction()
         self.length = 1
-        self.block_positions = [[self.x,self.y]]
+        self.block_positions = [[self.x, self.y]]
 
     def move(self, dx=10, dy=10):
 
@@ -37,6 +37,7 @@ class Snake:
         self.block_positions.insert(0, [self.x, self.y])
         # delete latest position
         self.block_positions.pop()
+
     def turn(self, turn_direction):
 
         if turn_direction == "UP" and (self.direction == "RIGHT" or self.direction == "LEFT"):
@@ -52,6 +53,13 @@ class Snake:
         self.length += 1
         # create new block on "head" position
         self.block_positions.insert(0, [self.x, self.y])
+
+    def reset(self, world_min_x, world_max_x, world_min_y, world_max_y):
+        self.x = (world_min_x + world_max_x) / 2
+        self.y = (world_min_y + world_max_y) / 2
+        self.direction = self.random_direction()
+        self.length = 1
+        self.block_positions = [[self.x, self.y]]
 
     @staticmethod
     def random_direction():

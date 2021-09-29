@@ -15,3 +15,6 @@ class Player:
 
     def increase_score(self):
         self.score = self.score + constants.Scoring.FOOD
+
+    def reset(self):
+        self.score = 0

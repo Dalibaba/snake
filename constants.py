@@ -1,6 +1,6 @@
 class Window:
-    SCREEN_WIDTH = 800
-    SCREEN_HEIGHT = 800
+    SCREEN_WIDTH = 600
+    SCREEN_HEIGHT = 600
     TITLE = "SNAKE"
     COLOR_RED = 200
     COLOR_GREEN = 230
