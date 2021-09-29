@@ -13,6 +13,8 @@ class Direction:
     LEFT = "LEFT"
     RIGHT = "RIGHT"
 
-
 class Scoring:
     FOOD = 10
+
+class Game:
+    FPS = 20

@@ -54,13 +54,36 @@ game_over_font = pygame.font.Font('freesansbold.ttf', 64)
 losing_sound = mixer.Sound("assets/sounds/losing.wav")
 eating_sound = mixer.Sound("assets/sounds/eating.wav")
 
-
+# Snake image
+snake_image = pygame.image.load("assets/images/snake_frontal.png")
+snake_image = pygame.transform.scale(snake_image, (300, 300))
 def show_game_over_screen():
-    game_over_text = game_over_font.render("GAME OVER", True, (0, 0, 0,))
-    screen.blit(game_over_text, (constants.Window.SCREEN_WIDTH/2, constants.Window.SCREEN_HEIGHT/4))
+    # fill background with black
+    screen.fill((0, 0, 0))
 
-    game_over_text = font.render("Type your name to begin", True, (0, 0, 0,))
-    screen.blit(game_over_text, (constants.Window.SCREEN_WIDTH/2, constants.Window.SCREEN_HEIGHT/2))
+    # display snake image
+    rect = snake_image.get_rect()
+    rect = rect.move((constants.Window.SCREEN_WIDTH / 4, 50))
+    screen.blit(snake_image, rect)
+
+    game_over_text = game_over_font.render("GAME OVER", True, (constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
+    text_rect = game_over_text.get_rect(center=(constants.Window.SCREEN_WIDTH / 2, constants.Window.SCREEN_HEIGHT / 1.5))
+    screen.blit(game_over_text, text_rect)
+
+    type_your_name_text = font.render("PRESS ENTER TO PLAY AGAIN", True, (constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
+    text_rect = type_your_name_text.get_rect(
+        center=(constants.Window.SCREEN_WIDTH / 2, constants.Window.SCREEN_HEIGHT / 1.2))
+    screen.blit(type_your_name_text, text_rect)
+    pygame.display.flip()
+    waiting = True
+    while waiting:
+        clock.tick(constants.Game.FPS)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_RETURN:
+                    waiting = False
 
 
 # Game Loop
@@ -77,7 +100,6 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
         # keyboard pressing events
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
@@ -112,7 +134,7 @@ while running:
         game_player.increase_score()
 
     # if snake touches borders or itself, it's game over
-    if game_snake.x == min_x or game_snake.y == min_y-10 or game_snake.x == max_x or game_snake.y == max_y:
+    if game_snake.x == min_x or game_snake.y == min_y - 10 or game_snake.x == max_x or game_snake.y == max_y:
         losing_sound.play()
         game_over = True
 
@@ -123,6 +145,6 @@ while running:
 
     score = font.render("Score :" + str(game_player.score), True, (0, 0, 0,))
     screen.blit(score, (score_x, score_y))
-    clock.tick(10)
+    clock.tick(constants.Game.FPS)
     game_snake.move()
     pygame.display.update()
