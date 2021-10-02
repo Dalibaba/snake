@@ -6,6 +6,14 @@ class Window:
     COLOR_GREEN = 230
     COLOR_BLUE = 0
 
+class Fonts:
+    TEXT = 22
+    GAME_OVER = 64
+
+
+class Color:
+    PRIMARY = (Window.COLOR_RED, Window.COLOR_GREEN, Window.COLOR_BLUE)
+
 
 class Direction:
     UP = "UP"
@@ -13,8 +21,10 @@ class Direction:
     LEFT = "LEFT"
     RIGHT = "RIGHT"
 
+
 class Scoring:
     FOOD = 10
 
+
 class Game:
-    FPS = 20
+    FPS = 30
