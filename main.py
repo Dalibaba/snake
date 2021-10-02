@@ -2,6 +2,7 @@ import pygame
 from pygame import mixer
 
 import constants
+from services.database_service import database
 from snake import snake
 from food import food
 from player import player
@@ -10,6 +11,9 @@ from screens import start_screen
 from screens import game_over_screen
 # Initialize pygame
 pygame.init()
+
+# Initialize database
+db = database()
 
 # create screen
 screen = pygame.display.set_mode((
@@ -42,7 +46,7 @@ game_snake = snake.Snake(min_x, max_x, min_y, max_y)
 # create food
 game_food = food.Food(min_x, max_x, min_y, max_y)
 # create player
-game_player = player.Player("test")
+game_player = player.Player()
 
 # Score font
 font = pygame.font.Font('freesansbold.ttf', 22)
@@ -68,7 +72,8 @@ game_over = False
 game_start = True
 while running:
     if game_start:
-        start_screen.show(screen, clock)
+        player_name = start_screen.show(screen, clock)
+        game_player.name = player_name
         game_start = False
 
     if game_over:
@@ -118,6 +123,8 @@ while running:
     # if snake touches borders or itself, it's game over
     if game_snake.x == min_x or game_snake.y == min_y - 10 or game_snake.x == max_x or game_snake.y == max_y:
         losing_sound.play()
+        # insert score to database
+        db.insert(game_player.name, game_player.score)
         game_over = True
 
     for i, pos in enumerate(game_snake.block_positions):

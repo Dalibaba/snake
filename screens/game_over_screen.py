@@ -4,37 +4,54 @@ import constants
 
 # Snake image
 from screens import fonts
-
-snake_image = pygame.image.load("assets/images/snake_frontal.png")
-snake_image = pygame.transform.scale(snake_image, (300, 300))
+from services.database_service import database
 
 
 def show(screen, clock):
+    # Initialize database
+    db = database()
 
+    # fetch highscore
+    highscore = db.get_highscore()
+    print(highscore)
+    print(type(highscore))
     # Text font
     font = fonts.text()
     # Game over font
     game_over_font = fonts.game_over()
-
+    # highscore text font
+    font_highscore = fonts.text_highscore()
 
     # fill background with black
     screen.fill((0, 0, 0))
 
-    # display snake image
-    rect = snake_image.get_rect()
-    rect = rect.move((constants.Window.SCREEN_WIDTH / 4, 50))
-    screen.blit(snake_image, rect)
-
     game_over_text = game_over_font.render("GAME OVER", True, (
-    constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
+        constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
     text_rect = game_over_text.get_rect(
-        center=(constants.Window.SCREEN_WIDTH / 2, constants.Window.SCREEN_HEIGHT / 1.5))
+        center=(constants.Window.SCREEN_WIDTH / 2, constants.Window.SCREEN_HEIGHT / 10))
     screen.blit(game_over_text, text_rect)
 
-    type_your_name_text = font.render("PRESS ENTER TO PLAY AGAIN", True, (
-    constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
+    type_your_name_text = font.render("HIGHSCORE", True, (
+        constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
     text_rect = type_your_name_text.get_rect(
-        center=(constants.Window.SCREEN_WIDTH / 2, constants.Window.SCREEN_HEIGHT / 1.2))
+        center=(constants.Window.SCREEN_WIDTH / 2, constants.Window.SCREEN_HEIGHT / 5))
+    screen.blit(type_your_name_text, text_rect)
+
+    # display highscore
+    subtract = 10
+    for element in highscore:
+        string = element["name"] + "                  " + str(element["score"])
+        highscore_element = font_highscore.render(string, True, (
+            constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
+        text_rect = highscore_element.get_rect(
+            center=(constants.Window.SCREEN_WIDTH / 2, (constants.Window.SCREEN_HEIGHT / 1.15) - subtract),)
+        screen.blit(highscore_element, text_rect)
+        subtract += 40
+
+    type_your_name_text = font.render("PRESS ENTER TO PLAY AGAIN", True, (
+        constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
+    text_rect = type_your_name_text.get_rect(
+        center=(constants.Window.SCREEN_WIDTH / 2, constants.Window.SCREEN_HEIGHT / 1.05))
     screen.blit(type_your_name_text, text_rect)
     pygame.display.flip()
     waiting = True
@@ -46,5 +63,3 @@ def show(screen, clock):
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_RETURN:
                     waiting = False
-
-

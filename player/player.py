@@ -9,8 +9,8 @@ class Player:
     Create Player with name and score
     """
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self):
+        self.name = ""
         self.score = 0
 
     def increase_score(self):
