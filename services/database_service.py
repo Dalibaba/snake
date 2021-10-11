@@ -1,3 +1,7 @@
+"""
+database class
+"""
+
 from tinydb import TinyDB
 
 
@@ -12,4 +16,6 @@ class database:
     def get_highscore(self, ):
         highscore = self.db.all()
         highscore.sort(key=lambda k: k['score'])
-        return highscore[-10:]
+        highscore.reverse()
+        print(highscore)
+        return highscore[:10]

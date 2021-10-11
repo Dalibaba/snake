@@ -1,10 +1,12 @@
 """
 Food class
 """
+
 import random
 
 
 class Food:
+
     """
     Create Food with starting position and direction
     """

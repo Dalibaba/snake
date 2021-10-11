@@ -38,15 +38,32 @@ def show(screen, clock):
     screen.blit(type_your_name_text, text_rect)
 
     # display highscore
-    subtract = 10
+    add = 10
     for element in highscore:
-        string = element["name"] + "                  " + str(element["score"])
-        highscore_element = font_highscore.render(string, True, (
+
+        name_length = len(element["name"])
+        player_name = element["name"]
+        player_score = str(element["score"])
+        score_length = len(player_score)
+        for i in range(0, (6 - name_length)):
+            player_name = player_name + " "
+        for i in range(0, (6 - score_length)):
+            player_score = "0" + player_score
+
+        string_name = player_name
+        highscore_element = font_highscore.render(string_name, True, (
             constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
         text_rect = highscore_element.get_rect(
-            center=(constants.Window.SCREEN_WIDTH / 2, (constants.Window.SCREEN_HEIGHT / 1.15) - subtract),)
+            center=(constants.Window.SCREEN_WIDTH / 3, (constants.Window.SCREEN_HEIGHT / 4) + add), )
         screen.blit(highscore_element, text_rect)
-        subtract += 40
+
+        string_score = player_score
+        highscore_element = font_highscore.render(string_score, True, (
+            constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))
+        text_rect = highscore_element.get_rect(
+            center=(constants.Window.SCREEN_WIDTH / 1.5, (constants.Window.SCREEN_HEIGHT / 4) + add), )
+        screen.blit(highscore_element, text_rect)
+        add += 40
 
     type_your_name_text = font.render("PRESS ENTER TO PLAY AGAIN", True, (
         constants.Window.COLOR_RED, constants.Window.COLOR_GREEN, constants.Window.COLOR_BLUE))

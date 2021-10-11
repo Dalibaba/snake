@@ -39,7 +39,7 @@ def show(screen, clock):
     user_input = ""
     # create rectangle
     input_rect = pygame.Rect(0, 0, 10, 10)
-    input_rect.center = ((constants.Window.SCREEN_WIDTH / 4, constants.Window.SCREEN_HEIGHT / 1.4))
+    input_rect.center = (constants.Window.SCREEN_WIDTH / 3.4, constants.Window.SCREEN_HEIGHT / 1.4)
     pygame.display.flip()
     waiting = True
 
@@ -57,8 +57,8 @@ def show(screen, clock):
                 # formation
 
                 else:
-                    if event.key != pygame.K_RETURN:
-                        user_input += event.unicode
+                    if event.key != pygame.K_RETURN and len(user_input) < 6 and event.unicode.isnumeric() == False:
+                        user_input += event.unicode.upper()
                 if event.type == pygame.KEYUP and user_input != "":
                     if event.key == pygame.K_RETURN:
                         waiting = False

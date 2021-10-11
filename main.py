@@ -121,7 +121,7 @@ while running:
         game_player.increase_score()
 
     # if snake touches borders or itself, it's game over
-    if game_snake.x < min_x or game_snake.y < min_y or game_snake.x > max_x or game_snake.y > max_y:
+    if game_snake.x < min_x or game_snake.y < min_y or game_snake.x >= max_x or game_snake.y >= max_y:
         losing_sound.play()
         # insert score to database
         db.insert(game_player.name, game_player.score)
@@ -132,7 +132,7 @@ while running:
             losing_sound.play()
             game_over = True
 
-    score = font.render("Score :" + str(game_player.score), True, (0, 0, 0,))
+    score = font.render("Score : " + str(game_player.score), True, (0, 0, 0,))
     screen.blit(score, (score_x, score_y))
     clock.tick(constants.Game.FPS)
     game_snake.move()
