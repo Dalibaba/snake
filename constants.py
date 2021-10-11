@@ -27,4 +27,4 @@ class Scoring:
 
 
 class Game:
-    FPS = 30
+    FPS = 20

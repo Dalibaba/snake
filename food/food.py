@@ -1,7 +1,6 @@
 """
 Food class
 """
-import constants
 import random
 
 

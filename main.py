@@ -32,14 +32,14 @@ clock = pygame.time.Clock()
 # define game area
 game_area_width = constants.Window.SCREEN_WIDTH - 100
 game_area_height = constants.Window.SCREEN_WIDTH - 100
-game_area_width_offset = 50
-game_area_height_offset = 50
+game_area_width_offset = 40
+game_area_height_offset = 40
 
 # coordinates range for creating snake and food
 min_x = game_area_width_offset
 max_x = game_area_width_offset + game_area_width
-min_y = game_area_width_offset
-max_y = game_area_width_offset + game_area_height
+min_y = game_area_height_offset
+max_y = game_area_height_offset + game_area_height
 
 # create snake
 game_snake = snake.Snake(min_x, max_x, min_y, max_y)
@@ -121,7 +121,7 @@ while running:
         game_player.increase_score()
 
     # if snake touches borders or itself, it's game over
-    if game_snake.x == min_x or game_snake.y == min_y - 10 or game_snake.x == max_x or game_snake.y == max_y:
+    if game_snake.x < min_x or game_snake.y < min_y or game_snake.x > max_x or game_snake.y > max_y:
         losing_sound.play()
         # insert score to database
         db.insert(game_player.name, game_player.score)
