@@ -11,5 +11,5 @@ class database:
 
     def get_highscore(self, ):
         highscore = self.db.all()
-        highscore_sorted = sorted(highscore, key=lambda k: k['score'])
-        return highscore_sorted[0:10]
+        highscore.sort(key=lambda k: k['score'])
+        return highscore[-10:]

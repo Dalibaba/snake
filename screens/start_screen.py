@@ -59,7 +59,7 @@ def show(screen, clock):
                 else:
                     if event.key != pygame.K_RETURN:
                         user_input += event.unicode
-                if event.type == pygame.KEYUP:
+                if event.type == pygame.KEYUP and user_input != "":
                     if event.key == pygame.K_RETURN:
                         waiting = False
                         return user_input
